@@ -1,4 +1,5 @@
-### Exercises from Introduction to Deep Learning course from TUM ( https://dvl.in.tum.de/teaching/i2dl-ss22/ ) 
+### Exercises from Introduction to Deep Learning course from TUM
+- https://dvl.in.tum.de/teaching/i2dl-ss22/ 
 
 ### Relevant Materials 
 - Stanford Course in Parallel(cs231n) : http://cs231n.stanford.edu/
@@ -31,7 +32,7 @@ Therefore, I would like to point out some important anecdotes:
 
 3. For the loss function, we could use the *L1* loss or the *MSE* (*L2*), between each pixel in the input and its corresponding pixel in the output.
 
-### Latent space:
+**Latent space:**
 - Resides between the encoder and the decoder. It is what we also call a **bottleneck**, because everything has to squeeze and fit through it. Like the Persian army, charging at only 300 Spartans at the battle of Thermopylae.
   - If the size of it is too small, not much information could eventually pass through to the decoder, and the reconstruction would be very hard. The result would be very blurry.
   - If too big, the network could basically learn to copy the image, without learning any meaningful features.
@@ -47,15 +48,15 @@ And voila! You’ll see that after struggling to achieve some meaningful classif
 
 --- 
 
-# Deep learning: Pipeline
+### Deep learning: Pipeline
 
 Now that we've touched all the important steps of deep learning pipeline, I would like to do a recap.  
 This post is basically meant for later, when you're smarter and older - as it gives some overview of the pipeline, from actual experience, that has been learned in blood, toil, tears and sweat.
 
-### 0. Do we even need a deep-learning application?
+**0. Do we even need a deep-learning application?**
 If our problem is Linear, just use linear regression, which has a closed form solution.
 
-### 1. Collect data.
+**1. Collect data**
 This is a very not trivial step, and although that within this course we work with some fun datasets, such as Cifar-10, MNIST, etc - real world data is really scarce, and usually there just isn't one available to our needs. It means we will have to collect the data in massive quantities, filter it, annotate it - or maybe apply some techniques to extract relevant information from it in an unsupervised fashion (exercise 08).
 
 > NOTE: Also, this step is bound to human errors. Therefore, when you first put your hands on a new dataset, you MUST play with it and verify it is actually appropriate for the task at hand and that the ground-truth data, from which the model is going to learn features of the real world, is actually accurate. For example, take this image from the Raidar dataset (https://raidar-dataset.com/), which offers ground truth for 2D images, for the task of semantic segmentation (exercise_10), where we predict a label for each pixel, and not only for the entire image.
@@ -70,7 +71,7 @@ These samples are bad, and will make false predictions on the test set.
 </table>
 
 
-### 2. Datasets and Dataloaders (exercise_03):
+**2. Datasets and Dataloaders (exercise_03):**
 While we tend to forget about this stage, it is a corner stone for a well behaving training session. Once you've verified that your dataset is good to work with, it is time to load it. Frameworks such as PyTorch have builtin functionalities, that will make your life really easy.
 
 However, it is important to remember the structures:
@@ -138,11 +139,11 @@ for i, batch in loop:
     ...
 ```
 
-### 3. Cross-validation and hyperparameters turning.
+**3. Cross-validation and hyperparameters turning.**
 Note that this a bit of the "chicken and the egg" problem - what comes first?  
 As cross validation is mostly there to ensure that our splits of train / val are balanced (the fair distribution of hard and easy, day and night, winter and summer, etc), I would say that you shuffle the data, fix train and val splits, perform hyperparameters tuning, and only then perform the cross-validation step, to fine tune.
 
-### 4. Model and Loss function.
+**4. Model and Loss function.**
 The bread and butter of the deep learning process. Usually when we start a deep learning project in Uni, we rely on an already existing model, that was carefully thought of. However, as it was created by humans, it could still contain errors. Never take a code base as a guarantee for perfection. You should read it thoroughly, understand the choices in architecture, and only then decide if to go with it, or tweak some stuff. It might be a wearing process, but it will save you SO MUCH time later on, and after all - you need to really understand what's going on, if you wanna add something or even debug your code.
 
 You should have a STRONG understanding of the layers we introduce in this course, such:
@@ -156,7 +157,7 @@ Loss functions: MSE and L1 vs HuberLoss, Crossentrpy vs FocalLoss, etc. Note tha
 
 Also, the usage of Skip-connections (exercise 10) is neglectable in memory and computational load and therefore is SUPER recommended. Note that for convolutions is it better to use concatenation in the channels' axis than element-wise summation.
 
-### 5. Training process tips.
+**5. Training process tips**
 
 - The core pipline: forward pass → loss calculation → backward pass → optimizer step  
 - We usually validate the network after each epoch.  
@@ -223,7 +224,7 @@ class Trainer:
             self.tb_logger.add_scalar("Loss/train", loss, training_steps)
 ```
 
-### DON'T FORGET TO SAVE CHECKPOINTS:
+**DON'T FORGET TO SAVE CHECKPOINTS:**
 
 Well, you're going to have to be patient and let your baby train.  
 But what if the process dies in the middle? What if you want to stop and try something else, but it's a shame to go through all the initial training all over again?
